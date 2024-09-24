@@ -1,0 +1,353 @@
+version: "3.4"
+services:
+  thorchain-thornode:
+    image: "127.0.0.1:5000/thorchain-thornode:latest"
+    command: ["/scripts/run-thornode.sh"]
+    networks:
+      - "internal"
+    environment:
+      EXTERNAL_IP: "$IP_ADDRESS"
+      VALIDATOR: "true"
+      NET: "mainnet"
+      CHAIN_ID: "thorchain-1"
+      DEBUG: "false"
+      HARDFORK_BLOCK_HEIGHT: ""
+      THOR_AUTO_STATE_SYNC_ENABLED: "false"
+      THOR_COSMOS_STATE_SYNC_SNAPSHOT_INTERVAL: "0"
+      THOR_TENDERMINT_LOG_FORMAT: "json"
+      SIGNER_NAME: "thorchain"
+      SIGNER_PASSWD: "signer_password_var"
+      SIGNER_SEED_PHRASE: "signer_seedphrase_var"
+    volumes:
+      - type: "bind"
+        source: "/path/to/host/thornode"
+        target: "/root/.thornode"
+      - type: "bind"
+        source: "/path/to/host/bifrost/data"
+        target: "/var/data/bifrost"
+      - type: "bind"
+        source: "/path/to/host/bifrost/etc"
+        target: "/etc/bifrost"
+
+
+  thorchain-bifrost:
+    image: "127.0.0.1:5000/thorchain-bifrost:latest"
+    command: ["/scripts/run-bifrost.sh"]
+    networks:
+      - "internal"
+    environment:
+      EXTERNAL_IP: "$IP_ADDRESS"
+      VALIDATOR: "true"
+      NET: "mainnet"
+      CHAIN_ID: "thorchain-1"
+      CHAIN_API: "thorchain-thornode:1317"
+      CHAIN_RPC: "thorchain-thornode:27147"
+      BTC_HOST: "bitcoin-rpc:8332"
+      ETH_HOST: "http://geth-rpc:8545"
+      LTC_HOST: "litecoin-rpc:9332"
+      LTC_DISABLED: "false"
+      BCH_HOST: "bitcoincash-rpc:8332"
+      BCH_DISABLED: "false"
+      DOGE_HOST: "dogecoin-rpc:22555"
+      DOGE_DISABLED: "false"
+      TERRA_HOST: "http://terra-rpc:26657"
+      TERRA_DISABLED: "true"
+      GAIA_HOST: "http://cosmoshub-rpc:26657"
+      GAIA_GRPC_HOST: "cosmoshub-rpc:9090"
+      GAIA_GRPC_TLS: "false"
+      GAIA_DISABLED: "false"
+      AVAX_HOST: "http://avalanche-rpc:9650/ext/bc/C/rpc"
+      AVAX_DISABLED: "false"
+      BIFROST_CHAINS_BTC_SCANNER_LEVELDB_COMPACTION_TABLE_SIZE_MULTIPLIER: "1"
+      BIFROST_CHAINS_BNB_DISABLED: "true"
+      BSC_HOST: "http://bsc-rpc:8545"
+      BIFROST_CHAINS_BSC_DISABLED: "false"
+      BIFROST_CHAINS_BSC_RPC_HOST: "http://bsc-rpc:8545"
+      BIFROST_CHAINS_BSC_BLOCK_SCANNER_RPC_HOST: "http://bsc-rpc:8545"
+      SIGNER_NAME: "thorchain"
+      SIGNER_PASSWD: "signer_password_var"
+      SIGNER_SEED_PHRASE: "signer_seedphrase_var"
+    volumes:
+      - type: "bind"
+        source: "/path/to/host/thornode"
+        target: "/root/.thornode"
+      - type: "bind"
+        source: "/path/to/host/bifrost/data"
+        target: "/var/data/bifrost"
+      - type: "bind"
+        source: "/path/to/host/bifrost/etc"
+        target: "/etc/bifrost"
+
+
+  thorchain-gateway:
+    image: "127.0.0.1:5000/thorchain-gateway:latest"
+    networks:
+      - "internal"
+    ports:
+    ports:
+      - target: 27146
+        published: 27146
+        protocol: "tcp"
+        mode: "host"
+      - target: 27147
+        published: 27147
+        protocol: "tcp"
+        mode: "host"
+      - target: 5040
+        published: 5040
+        protocol: "tcp"
+        mode: "host"
+      - target: 6040
+        published: 6040
+        protocol: "tcp"
+        mode: "host"
+
+
+  bitcoin-rpc:
+    image: "127.0.0.1:5000/bitcoin-rpc:latest"
+    networks:
+      - "internal"
+    ports:
+      - target: 8333
+        published: 8333
+        protocol: "tcp"
+        mode: "host"
+    read_only: false
+    volumes:
+      - type: "bind"
+        source: "/path/to/host/bitcoin-rpc"
+        target: "/home/bitcoin/.bitcoin"
+        read_only: false
+    command:
+      - "-txindex"
+      - "-rpcthreads=8"
+      - "-rpcworkqueue=64"
+      - "-rpcallowip=10.0.0.0/8"
+      - "-rpcbind=0.0.0.0"
+      - "-rpcauth=thorchain:d7e53bb9757b6d4fabf87775c7824b5c$$7097e9cde30ef4319ed708fc559267679ae6cc0bf7e18fd49b283650c0c26a10"
+      - "-dbcache=8192"
+      - "-deprecatedrpc=create_bdb"
+
+
+  geth-rpc:
+    image: "127.0.0.1:5000/geth-rpc:latest"
+    networks:
+      - "internal"
+    ports:
+      - target: 30303
+        published: 30303
+        protocol: "tcp"
+        mode: "host"
+      - target: 30303
+        published: 30303
+        protocol: "udp"
+        mode: "host"
+    command:
+      - "--db.engine=pebble"
+      - "--state.scheme=path"
+      - "--syncmode=snap"
+      - "--authrpc.addr=0.0.0.0"
+      - "--authrpc.vhosts=*"
+      - "--authrpc.jwtsecret=/jwtsecret"
+      - "--http"
+      - "--http.addr=0.0.0.0"
+      - "--http.port=8545"
+      - "--allow-insecure-unlock"
+      - "--http.api='db,eth,net,web3,personal,consensus'"
+      - "--http.vhosts=*"
+      - "--metrics"
+      - "--metrics.addr=0.0.0.0"
+    read_only: false
+    volumes:
+      - type: "bind"
+        source: "/path/to/hostgeth"
+        target: "/home/user/.ethereum"
+        read_only: false
+
+  lodestar-rpc:
+    image: "127.0.0.1:5000/lodestar-rpc:latest"
+    networks:
+      - "internal"
+    ports:
+      - target: 9000
+        published: 9000
+        protocol: "tcp"
+        mode: "host"
+      - target: 9000
+        published: 9000
+        protocol: "udp"
+        mode: "host"
+    command:
+      - "beacon"
+      - "--network=mainnet"
+      - "--dataDir=/home/user/data"
+      - "--logFile=info"
+      - "--rest"
+      - "--rest.address=0.0.0.0"
+      - "--rest.port=5052"
+      - "--metrics"
+      - "--metrics.address=0.0.0.0"
+      - "--metrics.port=8008"
+      - "--execution.urls=http://geth-rpc:8551"
+      - "--jwtSecret=/jwtsecret"
+      - "--checkpointSyncUrl=https://beaconstate.ethstaker.cc"
+    volumes:
+      - type: "bind"
+        source: "/path/to/host/lodestar"
+        target: "/home/user/data"
+
+
+  bitcoincash-rpc:
+    image: "127.0.0.1:5000/bitcoincash-rpc:latest"
+    networks:
+      - "internal"
+    ports:
+      - target: 8334
+        published: 8334
+        protocol: "tcp"
+        mode: "host"
+    volumes:
+      - type: "bind"
+        source: "/path/to/host/bitcoincash-rpc"
+        target: "/home/bitcoin/.bitcoin"
+    command:
+      - "-port=8334"
+      - "-txindex"
+      - "-rpcthreads=8"
+      - "-rpcworkqueue=64"
+      - "-rpcallowip=10.0.0.0/8"
+      - "-rpcbind=0.0.0.0"
+      - "-rpcauth=thorchain:d7e53bb9757b6d4fabf87775c7824b5c$$7097e9cde30ef4319ed708fc559267679ae6cc0bf7e18fd49b283650c0c26a10"
+
+
+  dogecoin-rpc:
+    image: "127.0.0.1:5000/dogecoin-rpc:latest"
+    networks:
+      - "internal"
+    ports:
+      - target: 22556
+        published: 22556
+        protocol: "tcp"
+        mode: "host"
+    volumes:
+      - type: "bind"
+        source: "/path/to/host/dogecoin-rpc"
+        target: "/home/dogecoin/.dogecoin"
+    command:
+      - "-printtoconsole"
+      - "-debug=alert"
+      - "-debug=db"
+      - "-debug=proxy"
+      - "-debug=prune"
+      - "-debug=reindex"
+      - "-txindex"
+      - "-rpcthreads=16"
+      - "-rpcworkqueue=64"
+      - "-rpcallowip=10.0.0.0/8"
+      - "-rpcbind=0.0.0.0"
+      - "-rpcauth=thorchain:d7e53bb9757b6d4fabf87775c7824b5c$$7097e9cde30ef4319ed708fc559267679ae6cc0bf7e18fd49b283650c0c26a10"
+      - "-minrelaytxfee=0.3"
+      - "-harddustlimit=0.002"
+      - "-mempoolreplacement=0"
+      - "-dbcache=4096"
+
+
+  litecoin-rpc:
+    image: "127.0.0.1:5000/litecoin-rpc:latest"
+    networks:
+      - "internal"
+    ports:
+      - target: 8335
+        published: 8335
+        protocol: "tcp"
+        mode: "host"
+    volumes:
+      - type: "bind"
+        source: "/path/to/host/litecoin-rpc"
+        target: "/home/litecoin/.litecoin"
+    command:
+      - "-port=8335"
+      - "-txindex"
+      - "-rpcthreads=8"
+      - "-rpcworkqueue=64"
+      - "-rpcallowip=10.0.0.0/8"
+      - "-rpcbind=0.0.0.0"
+      - "-rpcauth=thorchain:d7e53bb9757b6d4fabf87775c7824b5c$$7097e9cde30ef4319ed708fc559267679ae6cc0bf7e18fd49b283650c0c26a10"
+
+
+  avalanche-rpc:
+    image: "127.0.0.1:5000/avalanche-rpc:latest"
+    networks:
+      - "internal"
+    ports:
+      - target: 9651
+        published: 9651
+        protocol: "tcp"
+        mode: "host"
+    volumes:
+      - type: "bind"
+        source: "/path/to/host/avalanche-rpc"
+        target: "/root/.avalanchego"
+    command:
+      - "./avalanchego"
+      - "--http-host=0.0.0.0"
+      - "--http-allowed-hosts=*"
+
+
+  cosmoshub-rpc:
+    image: "127.0.0.1:5000/cosmoshub-rpc:latest"
+    networks:
+      - "internal"
+    ports:
+      - target: 26656
+        published: 26656
+        protocol: "tcp"
+        mode: "host"
+    volumes:
+      - type: "bind"
+        source: "/path/to/host/cosmoshub-rpc"
+        target: "/root/.gaia"
+    command:
+      - "/entrypoint.sh"
+      - "--minimum-gas-prices=0.001uatom"
+      - "--grpc.address=0.0.0.0:9090"
+
+
+  bsc-rpc:
+    image: "127.0.0.1:5000/bsc-rpc:latest"
+    networks:
+      - "internal"
+    environment:
+      NETWORK: "mainnet"
+      BSC_HOME: "/bsc"
+      DATA_DIR: "/data"
+    ports:
+      - target: 30311
+        published: 30311
+        protocol: "tcp"
+        mode: "host"
+      - target: 30311
+        published: 30311
+        protocol: "udp"
+        mode: "host"
+    volumes:
+      - type: "bind"
+        source: /path/to/host/bsc-rpc"
+        target: "/data"
+    command:
+      - "--cache=8000"
+      - "--http"
+      - "--http.addr=0.0.0.0"
+      - "--http.port=8545"
+      - "--http.api=eth,net,engine,web3,miner,personal,txpool,debug"
+      - "--http.corsdomain=*"
+      - "--http.vhosts=*"
+      - "--datadir=/data"
+      - "--history.transactions=90000"
+      - "--syncmode=full"
+      - "--tries-verify-mode=none"
+
+
+networks:
+  internal:
+    external: true
