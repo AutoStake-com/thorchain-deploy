@@ -23,7 +23,7 @@ docker exec -it af9a9b6f687e thornode tx thorchain deposit 120000000 rune "bond:
 ```
 
 
-## STEP2: GENERATE NODE KEYS <br>
+## STEP2: NODE KEYS <br>
 
 Firstly get your `"$NODE_PUB_KEY"` with the following 2 commands:
 
