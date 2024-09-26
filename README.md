@@ -8,9 +8,15 @@ You can think of this as if though the standard ENV as being multiple open-sourc
 
 # Instructions <br>
 
-Before deploying the docker-compose, ensure you have all the latest images by checking the pulled versions against the value in their respective values.yaml. <br>
+1. Before deploying the docker-compose, ensure you have all the latest images by checking the pulled versions against the value in their respective values.yaml. <br>
 
-Additionally make sure to replace the `EXTERNAL_IP: "$IP_ADDRESS"` ENV's with your IP address. <br>
+2. Make sure to replace the `EXTERNAL_IP: "$IP_ADDRESS"` ENV's with your IP address. <br>
+
+Imporant, use secure key managent for the following 2 Environment variables. <br>
+
+3. Replace the `SIGNER_PASSWD: "signer_password_var"` ENV's with your thornode and bifrost signer key password. <br>
+
+4. Replace the `SIGNER_SEED_PHRASE: "signer_seedphrase_var"` ENV's with your IP seed phrase. <br>
 
 ## STEP1: BOND OPERATOR <br>
 Bond your operator key to your node key, see: <br>
