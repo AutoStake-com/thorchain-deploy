@@ -13,7 +13,8 @@ Before deploying the docker-compose, ensure you have all the latest images by ch
 Additionally make sure to replace the `EXTERNAL_IP: "$IP_ADDRESS"` with your IP address. <br>
 
 ## STEP1: BOND ADMIN <br>
-Bond your operator key to your node key, see: https://docs.thorchain.org/thornodes/overview/thornode-stack#thornode-keys <br>
+Bond your operator key to your node key, see: <br>
+https://docs.thorchain.org/thornodes/overview/thornode-stack#thornode-keys <br>
 
 ```
 docker exec -it af9a9b6f687e thornode tx thorchain deposit 120000000 rune "bond:NODE_ADDRESS" --from admin_address --chain-id thorchain-1 --node tcp://localhost:27147 --keyring-backend file
