@@ -12,7 +12,7 @@ You can think of this as if though the standard ENV as being multiple open-sourc
 
 2. Make sure to replace the `EXTERNAL_IP: "$IP_ADDRESS"` ENV's with your IP address. <br>
 
-IMPORTANT: use secure key managent for the following 2 environment variables. <br>
+IMPORTANT: use secure key managent tools for the following 2 environment variables. <br>
 
 3. Replace the `SIGNER_PASSWD: "signer_password_var"` ENV's with your thornode and bifrost signer key password. <br>
 
