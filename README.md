@@ -16,8 +16,10 @@ Additionally make sure to replace the `EXTERNAL_IP: "$IP_ADDRESS"` with your IP 
 Bond your operator key to your node key, see: <br>
 https://docs.thorchain.org/thornodes/overview/thornode-stack#thornode-keys <br>
 
+It is recomended to use secure key management for this, the command below should serve as an exmaple only. <br>
+
 ```
-docker exec -it af9a9b6f687e thornode tx thorchain deposit 120000000 rune "bond:NODE_ADDRESS" --from admin_address --chain-id thorchain-1 --node tcp://localhost:27147 --keyring-backend file
+docker exec -it af9a9b6f687e thornode tx thorchain deposit 120000000 rune "bond:NODE_ADDRESS" --from operator_address --chain-id thorchain-1 --node tcp://localhost:27147 --keyring-backend file
 ```
 
 
