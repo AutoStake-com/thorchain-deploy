@@ -10,7 +10,7 @@ You can think of this as if though the standatard ENV as being multiple open-sou
 
 Before deploying the docker-compose, ensure you have all the latest images by checking the pulled versions against the value in their respective values.yaml. <br>
 
-Additionally make sure to replace the `EXTERNAL_IP: "$IP_ADDRESS"` with your IP address<br>
+Additionally make sure to replace the `EXTERNAL_IP: "$IP_ADDRESS"` with your IP address. <br>
 
 ## STEP1: BOND ADMIN <br>
 Bond your operator key to your node key, see: https://docs.thorchain.org/thornodes/overview/thornode-stack#thornode-keys <br>
