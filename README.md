@@ -12,7 +12,7 @@ Before deploying the docker-compose, ensure you have all the latest images by ch
 
 Additionally make sure to replace the `EXTERNAL_IP: "$IP_ADDRESS"` ENV's with your IP address. <br>
 
-## STEP1: BOND ADMIN <br>
+## STEP1: BOND OPERATOR <br>
 Bond your operator key to your node key, see: <br>
 https://docs.thorchain.org/thornodes/overview/thornode-stack#thornode-keys <br>
 
