@@ -4,7 +4,7 @@ This is not meant to work as is but simply be a simplified template to work from
 
 By implementing custom secure infrastructures like this we can increase the security of the Thorchain network, it would take roughly 35% of nodes running custom secure infrastructure to lock down the network. <br>
 
-You can think of this as if though the standard ENV as being multiple open-source Ethereum client implementations, where black hats can look for bugs, whereas this would introduce significantly more closed source clients, introducing security through obscurity along with a whole other layer of security. <br>
+You can think of this as if though the standard ENV as being multiple open-source Ethereum client implementations, where black hats can look for bugs, whereas this would introduce significantly more closed source clients, introducing security through obscurity along with a whole other new layers of security. <br>
 
 # Instructions <br>
 
