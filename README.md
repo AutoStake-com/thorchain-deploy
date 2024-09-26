@@ -68,7 +68,7 @@ docker exec -it af9a9b6f687e thornode tx thorchain set-version --from thorchain 
 ```
 
 
-#  MANAGING <br>
+# Managing <br>
 
 You can send Mimir votes to the network like this:
 
