@@ -18,7 +18,7 @@ docker exec -it af9a9b6f687e thornode tx thorchain deposit 120000000 rune "bond:
 
 ## STEP2: GENERATE KEYS <br>
 
-Firstly get your "$NODE_PUB_KEY" with the following 2 commands
+Firstly get your "$NODE_PUB_KEY" with the following 2 commands:
 
 ```
 docker exec -it af9a9b6f687e thornode keys show thorchain --pubkey --keyring-backend file <br>
@@ -27,13 +27,13 @@ docker exec -it af9a9b6f687e thornode pubkey <br>
 ```
 
 
-Secondly get your "$NODE_PUB_KEY_ED25519" with the following command
+Secondly get your "$NODE_PUB_KEY_ED25519" with the following command:
 
 ```
 docker exec -it af9a9b6f687e thornode ed25519 <br>
 ```
 
-Lastly get your "$VALIDATOR" with the following command
+Lastly get your "$VALIDATOR" with the following command:
 
 ```
 docker exec -it af9a9b6f687e thornode tendermint show-validator <br>
@@ -42,19 +42,19 @@ docker exec -it af9a9b6f687e thornode pubkey --bech cons <br>
 ```
 
 
-Now register these keys onchain
+Now register these keys onchain:
 
 ```
 docker exec -it af9a9b6f687e thornode tx thorchain set-node-keys "$NODE_PUB_KEY" "$NODE_PUB_KEY_ED25519" "$VALIDATOR" --from thorchain --chain-id thorchain-1 --node tcp://localhost:27147 --keyring-backend file
 ```
 
-Next, we you need to register your IP onchain by replacing $IP_ADDRESS with your IP and issuing the following command
+Next, we you need to register your IP onchain by replacing $IP_ADDRESS with your IP and issuing the following command:
 
 ```
 docker exec -it af9a9b6f687e thornode tx thorchain set-ip-address $IP_ADDRESS --from thorchain --chain-id thorchain-1 --node tcp://localhost:27147 --keyring-backend file
 ```
 
-Then lastly we must instruct the network which version of thorchain we are running, like so
+Then lastly we must instruct the network which version of thorchain we are running, like so:
 
 ```
 docker exec -it af9a9b6f687e thornode tx thorchain set-version --from thorchain --chain-id thorchain-1 --node tcp://localhost:27147 --keyring-backend file
