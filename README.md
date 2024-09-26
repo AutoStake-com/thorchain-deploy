@@ -1,10 +1,10 @@
 # Disclaimer <br>
 
-This is not meant to work as is but simply be a simplfied template to work from to integrate thorchain into your own custom secure infrastructure, it is important you have a robust understanding of your infrastructures security, failure to do so can lead to loss of bonded funds. <br>
+This is not meant to work as is but simply be a simplified template to work from to integrate Thorchain into your own custom secure infrastructure, it is important you have a robust understanding of your infrastructures security, failure to do so can lead to loss of bonded funds. <br>
 
-By implementing custom secure infrastructures like this we can increase the security of the thorchain network, it would take roughly 35% of nodes running custom secure infrastructure to lock down the network. <br>
+By implementing custom secure infrastructures like this we can increase the security of the Thorchain network, it would take roughly 35% of nodes running custom secure infrastructure to lock down the network. <br>
 
-You can think of this as if though the standatard ENV as being multiple open-source ethereum client implemenations, where black hats can look for bugs, wheras this would introduce significantly more closed source clients, introducing security through obscurity along with a whole other layer of security. <br>
+You can think of this as if though the standard ENV as being multiple open-source Ethereum client implementations, where black hats can look for bugs, whereas this would introduce significantly more closed source clients, introducing security through obscurity along with a whole other layer of security. <br>
 
 # Instructions <br>
 
@@ -16,7 +16,7 @@ Additionally make sure to replace the `EXTERNAL_IP: "$IP_ADDRESS"` ENV's with yo
 Bond your operator key to your node key, see: <br>
 https://docs.thorchain.org/thornodes/overview/thornode-stack#thornode-keys <br>
 
-It is recomended to use secure key management for this, the command below should serve as an example only. <br>
+It is recommended to use secure key management for this, the command below should serve as an example only. <br>
 
 ```
 docker exec -it af9a9b6f687e thornode tx thorchain deposit 120000000 rune "bond:node_key" --from operator_key --chain-id thorchain-1 --node tcp://localhost:27147
