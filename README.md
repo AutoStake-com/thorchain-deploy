@@ -25,24 +25,24 @@ docker exec -it af9a9b6f687e thornode tx thorchain deposit 120000000 rune "bond:
 Firstly get your `"$NODE_PUB_KEY"` with the following 2 commands:
 
 ```
-docker exec -it af9a9b6f687e thornode keys show thorchain --pubkey --keyring-backend file <br>
-=> <br>
-docker exec -it af9a9b6f687e thornode pubkey <br>
+docker exec -it af9a9b6f687e thornode keys show thorchain --pubkey --keyring-backend file
+
+docker exec -it af9a9b6f687e thornode pubkey
 ```
 
 
 Secondly get your `"$NODE_PUB_KEY_ED25519"` with the following command:
 
 ```
-docker exec -it af9a9b6f687e thornode ed25519 <br>
+docker exec -it af9a9b6f687e thornode ed25519
 ```
 
 Lastly get your `"$VALIDATOR"` with the following command:
 
 ```
-docker exec -it af9a9b6f687e thornode tendermint show-validator <br>
-=> <br>
-docker exec -it af9a9b6f687e thornode pubkey --bech cons <br>
+docker exec -it af9a9b6f687e thornode tendermint show-validator
+
+docker exec -it af9a9b6f687e thornode pubkey --bech cons
 ```
 
 
