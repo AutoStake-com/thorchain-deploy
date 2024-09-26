@@ -20,13 +20,13 @@ services:
       SIGNER_SEED_PHRASE: "signer_seedphrase_var"
     volumes:
       - type: "bind"
-        source: "/path/to/host/thornode"
+        source: "/mnt/thornode"
         target: "/root/.thornode"
       - type: "bind"
-        source: "/path/to/host/bifrost/data"
+        source: "/mnt/bifrost/data"
         target: "/var/data/bifrost"
       - type: "bind"
-        source: "/path/to/host/bifrost/etc"
+        source: "/mnt/bifrost/etc"
         target: "/etc/bifrost"
 
 
@@ -69,13 +69,13 @@ services:
       SIGNER_SEED_PHRASE: "signer_seedphrase_var"
     volumes:
       - type: "bind"
-        source: "/path/to/host/thornode"
+        source: "/mnt/thornode"
         target: "/root/.thornode"
       - type: "bind"
-        source: "/path/to/host/bifrost/data"
+        source: "/mnt/bifrost/data"
         target: "/var/data/bifrost"
       - type: "bind"
-        source: "/path/to/host/bifrost/etc"
+        source: "/mnt/bifrost/etc"
         target: "/etc/bifrost"
 
 
@@ -104,7 +104,8 @@ services:
 
 
   bitcoin-rpc:
-    image: "127.0.0.1:5000/bitcoin-rpc:latest"
+    # https://gitlab.com/thorchain/devops/node-launcher/-/blob/master/bitcoin-daemon/values.yaml?ref_type=heads
+    image: "registry.gitlab.com/thorchain/devops/node-launcher:bitcoin-daemon-26.2@sha256:0080dd15a8a06312e2ca7bd5051ecc838275345ea98b285e7d66941225dd90c7"
     networks:
       - "internal"
     ports:
@@ -115,7 +116,7 @@ services:
     read_only: false
     volumes:
       - type: "bind"
-        source: "/path/to/host/bitcoin-rpc"
+        source: "/mnt/bitcoin-rpc"
         target: "/home/bitcoin/.bitcoin"
         read_only: false
     command:
@@ -160,7 +161,7 @@ services:
     read_only: false
     volumes:
       - type: "bind"
-        source: "/path/to/hostgeth"
+        source: "/mntgeth"
         target: "/home/user/.ethereum"
         read_only: false
 
@@ -193,12 +194,13 @@ services:
       - "--checkpointSyncUrl=https://beaconstate.ethstaker.cc"
     volumes:
       - type: "bind"
-        source: "/path/to/host/lodestar"
+        source: "/mnt/lodestar"
         target: "/home/user/data"
 
 
   bitcoincash-rpc:
-    image: "127.0.0.1:5000/bitcoincash-rpc:latest"
+    # https://gitlab.com/thorchain/devops/node-launcher/-/blob/master/bitcoin-cash-daemon/values.yaml?ref_type=heads
+    image: "registry.gitlab.com/thorchain/devops/node-launcher:bitcoin-cash-daemon-27.1.0@sha256:79b701f54ce8ec034ec800f3a23e08a56e5d4e02a89cc1e7f17ee11326d0ec70"
     networks:
       - "internal"
     ports:
@@ -208,7 +210,7 @@ services:
         mode: "host"
     volumes:
       - type: "bind"
-        source: "/path/to/host/bitcoincash-rpc"
+        source: "/mnt/bitcoincash-rpc"
         target: "/home/bitcoin/.bitcoin"
     command:
       - "-port=8334"
@@ -221,7 +223,8 @@ services:
 
 
   dogecoin-rpc:
-    image: "127.0.0.1:5000/dogecoin-rpc:latest"
+    # https://gitlab.com/thorchain/devops/node-launcher/-/blob/master/dogecoin-daemon/values.yaml?ref_type=heads
+    image: "registry.gitlab.com/thorchain/devops/node-launcher:dogecoin-daemon-1.14.7@sha256:496190c1ec8f4aefa8e894753016c73f3533176cd080bab1e6b45eca04a2a214"
     networks:
       - "internal"
     ports:
@@ -231,7 +234,7 @@ services:
         mode: "host"
     volumes:
       - type: "bind"
-        source: "/path/to/host/dogecoin-rpc"
+        source: "/mnt/dogecoin-rpc"
         target: "/home/dogecoin/.dogecoin"
     command:
       - "-printtoconsole"
@@ -253,7 +256,8 @@ services:
 
 
   litecoin-rpc:
-    image: "127.0.0.1:5000/litecoin-rpc:latest"
+    # https://gitlab.com/thorchain/devops/node-launcher/-/blob/master/litecoin-daemon/values.yaml?ref_type=heads
+    image: "registry.gitlab.com/thorchain/devops/node-launcher:litecoin-daemon-0.21.3@sha256:c1b50abe892771456bc4dcbc1f3617eb84fb89970c38d29880d9b0e2c2f8460a"
     networks:
       - "internal"
     ports:
@@ -263,7 +267,7 @@ services:
         mode: "host"
     volumes:
       - type: "bind"
-        source: "/path/to/host/litecoin-rpc"
+        source: "/mnt/litecoin-rpc"
         target: "/home/litecoin/.litecoin"
     command:
       - "-port=8335"
@@ -276,7 +280,8 @@ services:
 
 
   avalanche-rpc:
-    image: "127.0.0.1:5000/avalanche-rpc:latest"
+    # https://gitlab.com/thorchain/devops/node-launcher/-/blob/master/avalanche-daemon/values.yaml?ref_type=heads
+    image: "registry.gitlab.com/thorchain/devops/node-launcher:avalanche-daemon-1.11.10@sha256:b269de2c8223c0c417dd4d9d994cdaa466e7eafa99268266d8ea9eb715e4199b"
     networks:
       - "internal"
     ports:
@@ -286,7 +291,7 @@ services:
         mode: "host"
     volumes:
       - type: "bind"
-        source: "/path/to/host/avalanche-rpc"
+        source: "/mnt/avalanche-rpc"
         target: "/root/.avalanchego"
     command:
       - "./avalanchego"
@@ -295,7 +300,8 @@ services:
 
 
   cosmoshub-rpc:
-    image: "127.0.0.1:5000/cosmoshub-rpc:latest"
+    # https://gitlab.com/thorchain/devops/node-launcher/-/blob/master/gaia-daemon/values.yaml?ref_type=heads
+    image: "registry.gitlab.com/thorchain/devops/node-launcher:gaia-daemon-19.2.0@sha256:b7c6735a96712e9350fbeb7f0b2fa72549c3ba3becd4278acb472735e22ff5f1"
     networks:
       - "internal"
     ports:
@@ -305,7 +311,7 @@ services:
         mode: "host"
     volumes:
       - type: "bind"
-        source: "/path/to/host/cosmoshub-rpc"
+        source: "/mnt/cosmoshub-rpc"
         target: "/root/.gaia"
     command:
       - "/entrypoint.sh"
@@ -332,7 +338,7 @@ services:
         mode: "host"
     volumes:
       - type: "bind"
-        source: /path/to/host/bsc-rpc"
+        source: /mnt/bsc-rpc"
         target: "/data"
     command:
       - "--cache=8000"

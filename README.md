@@ -8,6 +8,10 @@ You can think of this as if though the standatard ENV as being multiple open-sou
 
 # Instructions <br>
 
+Before deploying the docker-compose, ensure you have all the latest images by checking the pulled versions against the value in their respective values.yaml. <br>
+
+Additionally make sure to replace the `EXTERNAL_IP: "$IP_ADDRESS"` with your IP address<br>
+
 ## STEP1: BOND ADMIN <br>
 Bond your operator key to your node key, see: https://docs.thorchain.org/thornodes/overview/thornode-stack#thornode-keys <br>
 
@@ -18,7 +22,7 @@ docker exec -it af9a9b6f687e thornode tx thorchain deposit 120000000 rune "bond:
 
 ## STEP2: GENERATE KEYS <br>
 
-Firstly get your "$NODE_PUB_KEY" with the following 2 commands:
+Firstly get your `"$NODE_PUB_KEY"` with the following 2 commands:
 
 ```
 docker exec -it af9a9b6f687e thornode keys show thorchain --pubkey --keyring-backend file <br>
@@ -27,13 +31,13 @@ docker exec -it af9a9b6f687e thornode pubkey <br>
 ```
 
 
-Secondly get your "$NODE_PUB_KEY_ED25519" with the following command:
+Secondly get your `"$NODE_PUB_KEY_ED25519"` with the following command:
 
 ```
 docker exec -it af9a9b6f687e thornode ed25519 <br>
 ```
 
-Lastly get your "$VALIDATOR" with the following command:
+Lastly get your `"$VALIDATOR"` with the following command:
 
 ```
 docker exec -it af9a9b6f687e thornode tendermint show-validator <br>
