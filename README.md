@@ -46,7 +46,7 @@ Secondly get your `"$NODE_PUB_KEY_ED25519"` with the following command:
 docker exec -it af9a9b6f687e thornode ed25519
 ```
 
-Lastly get your `"$VALIDATOR"` with the following command:
+Lastly get your `"$VALIDATOR"` with the following 2 commands:
 
 ```
 docker exec -it af9a9b6f687e thornode tendermint show-validator
